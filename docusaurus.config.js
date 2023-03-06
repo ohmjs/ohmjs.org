@@ -18,6 +18,9 @@ async function createConfig() {
     favicon: 'img/favicon.ico',
 
     // These are used for deployment.
+    // Note: Although the repo is now hosted at github.com/ohmjs/ohmj.org, we
+    // still deploy to ohmlang.github.io. In order to not break existing
+    // links, we should not move or delete that repo.
     organizationName: 'ohmlang',
     projectName: 'ohmlang.github.io',
     deploymentBranch: 'gh-pages',
