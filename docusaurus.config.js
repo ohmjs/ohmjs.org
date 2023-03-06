@@ -39,7 +39,7 @@ async function createConfig() {
             sidebarCollapsible: false,
             // Please change this to your repo.
             editUrl: ({ docPath }) =>
-              `https://github.com/harc/ohm/edit/main/doc/${docPath}`,
+              `https://github.com/ohmjs/ohm/edit/main/doc/${docPath}`,
             remarkPlugins: [remarkComment],
           },
           blog: false,
@@ -81,7 +81,7 @@ async function createConfig() {
               target: '_self',
             },
             {
-              href: 'https://github.com/harc/ohm',
+              href: 'https://github.com/ohmjs/ohm',
               position: 'right',
               className: 'header-github-link',
               'aria-label': 'GitHub repository',
@@ -119,7 +119,7 @@ async function createConfig() {
                 },
                 {
                   label: 'GitHub Discussions',
-                  href: 'https://github.com/harc/ohm/discussions',
+                  href: 'https://github.com/ohmjs/ohm/discussions',
                 },
               ],
             },
@@ -128,7 +128,7 @@ async function createConfig() {
               items: [
                 {
                   label: 'GitHub',
-                  href: 'https://github.com/harc/ohm',
+                  href: 'https://github.com/ohmjs/ohm',
                 },
                 {
                   label: 'Twitter',

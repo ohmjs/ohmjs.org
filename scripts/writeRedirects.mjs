@@ -7,11 +7,11 @@ import path from 'path';
 
 /*
 The following git.io URLs were in use in Ohm code:
-https://git.io/J0gPJ - https://github.com/harc/ohm/blob/master/doc/syntax-reference.md#special-characters
-https://git.io/JiYgP - https://github.com/harc/ohm/blob/master/doc/syntax-reference.md#syntactic-vs-lexical-rules
-https://git.io/Jwow5 - https://github.com/harc/ohm/blob/master/doc/releases/ohm-js-16.0.md#grammarfromscriptelement--grammarsfromscriptelements
-https://git.io/Jz4CI - https://github.com/harc/ohm/blob/master/doc/releases/ohm-js-16.0.md#args-to-_iter-and-_nonterminal-actions
-https://git.io/JRwtG - https://github.com/harc/ohm/blob/master/doc/releases/ohm-js-16.0.md#default-semantic-actions
+https://git.io/J0gPJ - https://github.com/ohmjs/ohm/blob/master/doc/syntax-reference.md#special-characters
+https://git.io/JiYgP - https://github.com/ohmjs/ohm/blob/master/doc/syntax-reference.md#syntactic-vs-lexical-rules
+https://git.io/Jwow5 - https://github.com/ohmjs/ohm/blob/master/doc/releases/ohm-js-16.0.md#grammarfromscriptelement--grammarsfromscriptelements
+https://git.io/Jz4CI - https://github.com/ohmjs/ohm/blob/master/doc/releases/ohm-js-16.0.md#args-to-_iter-and-_nonterminal-actions
+https://git.io/JRwtG - https://github.com/ohmjs/ohm/blob/master/doc/releases/ohm-js-16.0.md#default-semantic-actions
  */
 
 /*

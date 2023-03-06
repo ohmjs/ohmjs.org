@@ -10,9 +10,9 @@ The easiest way to get started with Ohm is to use the [interactive editor](https
 ## Resources
 
 - Tutorial: [Ohm: Parsing Made Easy](https://nextjournal.com/dubroy/ohm-parsing-made-easy)
-- The [math example](https://github.com/harc/ohm/tree/main/examples/math/index.html) is extensively commented and is a good way to dive deeper.
-- [Examples](https://github.com/harc/ohm/tree/main/examples/)
-- For community support and discussion, join us on [Discord](https://discord.gg/KwxY5gegRQ), [GitHub Discussions](https://github.com/harc/ohm/discussions), or the [ohm-discuss mailing list](https://groups.google.com/u/0/g/ohm-discuss).
+- The [math example](https://github.com/ohmjs/ohm/tree/main/examples/math/index.html) is extensively commented and is a good way to dive deeper.
+- [Examples](https://github.com/ohmjs/ohm/tree/main/examples/)
+- For community support and discussion, join us on [Discord](https://discord.gg/KwxY5gegRQ), [GitHub Discussions](https://github.com/ohmjs/ohm/discussions), or the [ohm-discuss mailing list](https://groups.google.com/u/0/g/ohm-discuss).
 - For updates, follow [@\_ohmjs on Twitter](https://twitter.com/_ohmjs).
 
 ## Installation
