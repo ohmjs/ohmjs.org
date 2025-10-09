@@ -28,7 +28,6 @@ async function createConfig() {
     // As recommended by https://docusaurus.io/docs/deployment#deploying-to-github-pages
     trailingSlash: false,
 
-    plugins: [require.resolve('docusaurus-plugin-fathom')],
     presets: [
       [
         'classic',
@@ -142,11 +141,7 @@ async function createConfig() {
         prism: {
           theme: lightCodeTheme,
           darkTheme: darkCodeTheme,
-        },
-        fathomAnalytics: {
-          siteId: 'KJSMJZEV',
-          customDomain: 'https://thirteen-six.ohmjs.org',
-        },
+        }
       }),
   };
 }

@@ -1657,7 +1657,7 @@
     "@docusaurus/theme-common" "2.0.0-beta.18"
     "@docusaurus/theme-search-algolia" "2.0.0-beta.18"
 
-"@docusaurus/react-loadable@5.5.2", "react-loadable@npm:@docusaurus/react-loadable@5.5.2":
+"@docusaurus/react-loadable@5.5.2":
   version "5.5.2"
   resolved "https://registry.yarnpkg.com/@docusaurus/react-loadable/-/react-loadable-5.5.2.tgz#81aae0db81ecafbdaee3651f12804580868fa6ce"
   integrity sha512-A3dYjdBGuy0IGT+wyLIGIKLRE+sAk1iNk0f1HjNDysO7u8lhL4N3VEm+FAubmJbAztn94F7MxBTPmnixbiyFdQ==
@@ -3690,11 +3690,6 @@ dns-packet@^5.2.2:
   integrity sha512-spBwIj0TK0Ey3666GwIdWVfUpLyubpU53BTCu8iPn4r4oXd9O14Hjg3EHw3ts2oed77/SeckunUYCyRlSngqHw==
   dependencies:
     "@leichtgewicht/ip-codec" "^2.0.1"
-
-docusaurus-plugin-fathom@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/docusaurus-plugin-fathom/-/docusaurus-plugin-fathom-1.1.0.tgz#d338d4f115c8f699c56d8f1e2413d75a2f244dc3"
-  integrity sha512-MVMYb2daXLho8Foaxl2ipTCH3RWEmV5plQytGa8tMk3LOiWcZ5S9TcOhcAB9W5b9ZeebyotWYXpTnsLyXgKFgA==
 
 dom-converter@^0.2.0:
   version "0.2.0"
@@ -6762,6 +6757,14 @@ react-loadable-ssr-addon-v5-slorber@^1.0.1:
   integrity sha512-lq3Lyw1lGku8zUEJPDxsNm1AfYHBrO9Y1+olAYwpUJ2IGFBskM0DMKok97A6LWUpHm+o7IvQBOWu9MLenp9Z+A==
   dependencies:
     "@babel/runtime" "^7.10.3"
+
+"react-loadable@npm:@docusaurus/react-loadable@5.5.2":
+  version "5.5.2"
+  resolved "https://registry.yarnpkg.com/@docusaurus/react-loadable/-/react-loadable-5.5.2.tgz#81aae0db81ecafbdaee3651f12804580868fa6ce"
+  integrity sha512-A3dYjdBGuy0IGT+wyLIGIKLRE+sAk1iNk0f1HjNDysO7u8lhL4N3VEm+FAubmJbAztn94F7MxBTPmnixbiyFdQ==
+  dependencies:
+    "@types/react" "*"
+    prop-types "^15.6.2"
 
 react-router-config@^5.1.1:
   version "5.1.1"
