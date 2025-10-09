@@ -176,6 +176,8 @@ as well as multiline (`/* */`) comments like:
 
 <code id="applySyntactic">applySyntactic&lt;<i>ruleName</i>&gt;</code>: Allows the syntactic rule _ruleName_ to be applied in a lexical context, which is otherwise not allowed. Spaces are skipped _before_ and _after_ the rule application. _New in Ohm v16.1.0._
 
+<code>unicodeChar&lt;<i>categoryOrProp</i>&gt;</code>: matches a single Unicode code point from a given category, or with a given binary property. _categoryOrProp_ is a terminal that is either (a) a valid Unicode General_Category value (e.g. `"Zl"`), or (b) one of the following binary property names: `"XID_Start"`, `"XID_Continue"`, `"White_Space"`.
+
 ## Grammar Syntax
 
 ### Grammar Inheritance
@@ -229,7 +231,7 @@ ident (an identifier)
 
 #### Inline Rule Declarations
 
-<pre><code><i>expr</i> — <i>caseName</i></code></pre>
+<pre><code><i>expr</i> -- <i>caseName</i></code></pre>
 
 When a parsing expression is followed by the characters `--` and a name, it signals an _inline rule declaration_. This is most commonly used in alternation expressions to ensure that each branch has the same arity. For example, the following declaration:
 
@@ -275,7 +277,7 @@ Array = "[" "]"  -- empty
 Elements = Element ("," Element)*
 ```
 
-`Array` and `Elements` are both synactic rules, since their names begin with a capital letter. Here's what a lexical version of these rule would look like, with _explicit_ space skipping:
+`Array` and `Elements` are both syntactic rules, since their names begin with a capital letter. Here's what a lexical version of these rule would look like, with _explicit_ space skipping:
 
 <!-- @markscript
   let lexicalDefs;
