@@ -62,13 +62,13 @@ async function createConfig() {
             src: 'img/ohmjs-logo.svg',
           },
           items: [
+            {to: '/blog', label: 'Blog', position: 'left'},
             {
               type: 'doc',
               docId: 'intro',
               position: 'left',
               label: 'Docs',
             },
-            {to: '/blog', label: 'Blog', position: 'left'},
             {
               to: 'pathname:///editor',
               label: 'Editor',
