@@ -41,13 +41,9 @@ async function createConfig() {
               `https://github.com/ohmjs/ohm/edit/main/doc/${docPath}`,
             remarkPlugins: [remarkComment],
           },
-          blog: false,
-          // blog: {
-          //   showReadingTime: true,
-          //   // Please change this to your repo.
-          //   editUrl:
-          //     'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-          // },
+          blog: {
+            showReadingTime: false,
+          },
           theme: {
             customCss: require.resolve('./src/css/custom.css'),
           },
@@ -72,7 +68,7 @@ async function createConfig() {
               position: 'left',
               label: 'Docs',
             },
-            //            {to: '/blog', label: 'Blog', position: 'left'},
+            {to: '/blog', label: 'Blog', position: 'left'},
             {
               to: 'pathname:///editor',
               label: 'Editor',
