@@ -1,6 +1,6 @@
 # Incremental semantics
 
-Ohm supports incremental parsing, meaning that once an input is parsed, it can be quickly reparsed after each edit operation. Incremental _parsing_ is straightforward to use: you just need to use instantiate a [Matcher object](https://ohmjs.org/docs/api-reference#matcher-objects) rather than directly using your Grammar's `match` method.
+Ohm supports incremental parsing, meaning that once an input is parsed, it can be quickly reparsed after each edit operation. Incremental _parsing_ is straightforward to use: you just need to use instantiate a [Matcher object](api-reference.md#matcher-objects) rather than directly using your Grammar's `match` method.
 
 It's also possible to build fully incremental processing pipelines on top of Ohm's incremental parsing, but this is less straightforward. In this document we talk about some of the strategies for doing so.
 
