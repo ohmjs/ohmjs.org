@@ -66,11 +66,11 @@ pexprs.Alt.prototype.eval = function (state) {
 };
 ```
 
-To evaluate an `Alt`, we just recursively evaluate its children. If one of them succeeds, then the `Alt` succeeds; otherwise, it fails. This approach is quite straightforward and simple, but it's also not very performant.
+To evaluate an `Alt`, we just recursively evaluate its children. If one of them succeeds, then the `Alt` succeeds; otherwise, it fails. This approach is straightforward, but not very performant.
 
 ## Wasm compilation
 
-At a high level, the v18 code has two parts: 
+At a high level, the v18 code has two parts:
 
 1. Runtime support code written in [AssemblyScript](https://www.assemblyscript.org/).
 2. The WebAssembly codegen piece, which is written in TypeScript.
@@ -109,8 +109,6 @@ Note that in the generated WebAssembly code, we're also not dispatching to any k
 
 Producing a _recognizer_ (something that just accepts or rejects a given string, without producing a parse tree) in this way was the first major milestone for v18, and it only took about 8 days. We only targeted pure-PEG features; Ohm-specific things like parameterized rules and left recursion would be harder to deal with.
 
-The next step was to add support for constructing parse trees.
-
 ## Building syntax trees
 
 So far we've described how v18 compiles a recognizer. But to do something useful with a valid input, we need to produce some kind of _parse tree_ — or _concrete syntax tree_ (CST), as they're called in Ohm.
@@ -135,8 +133,6 @@ For references between nodes, we use a 32-bit offset into linear memory, rather 
 Overall, the approach is similar to what Adrian Sampson describes in [Flattening ASTs (and Other Compiler Data Structures)](https://www.cs.cornell.edu/~asampson/blog/flattening.html).
 
 ### Node layout
-
-The representation for the nodes themselves is also fairly compact.
 
 #### Terminal nodes
 
@@ -294,8 +290,8 @@ If a rule is referenced exactly once in the grammar, its body is emitted inline 
 
 Some CST nodes have a fixed structure, no matter where they appear in the tree:
 
-- single-child nonterminals: simple rules that match a single code point, like `letter` or `digit`.
-- empty iteration nodes (zero children and zero match length).
+- Single-child nonterminals: simple rules that match a single code point, like `letter` or `digit`.
+- Empty iteration nodes (zero children and zero match length).
 
 For nodes like this, we preallocate a singleton instance, and use that whenever it's needed, rather than allocating separate nodes for each instance.
 
