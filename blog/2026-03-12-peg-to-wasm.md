@@ -15,7 +15,7 @@ The new parsing engine works by compiling an Ohm grammar — which is a form of 
 
 ## PExpr trees
 
-In previous versions of Ohm (up to and including v17), the parsing engine used an approach called _AST interpretation_. We'll briefly explain how that works; it will be useful for understanding how the WebAssembly version is different.
+In previous versions of Ohm (up to and including v17), the parsing engine used an approach called _AST interpretation_. Here's how that works.
 
 When you instantiate a grammar with Ohm, it parses your grammar and converts it to an abstract syntax tree. You can think of this tree as a kind of program, which describes a parser for the language. The nodes of the tree are _parsing expressions_, or `PExprs` as they're called in the source code.
 
@@ -113,7 +113,9 @@ After adding support for constructing basic parse trees, the first version of th
 
 ## Building syntax trees
 
-So far we've described how v18 compiles a recognizer. But to do something useful with a valid input, we need to produce some kind of _parse tree_ — or _concrete syntax tree_ (CST), as they're called in Ohm. In v17, CST nodes are regular JavaScript objects, allocated on the heap and managed by the garbage collector. But, from a memory management perspective, CST nodes have a few interesting properties:
+So far we've described how v18 compiles a recognizer. But to do something useful with a valid input, we need to produce some kind of _parse tree_ — or _concrete syntax tree_ (CST), as they're called in Ohm.
+
+In v17, CST nodes are regular JavaScript objects, allocated on the heap and managed by the garbage collector. From a memory management perspective, they have a few interesting properties:
 
 - The nodes themselves are relatively small, so the per-node memory management overhead is relatively large.
 - There are a large number of nodes (counting Terminal nodes, around one per input character).
@@ -254,7 +256,7 @@ The `KeyVal` rule takes two parameters, `keyExp` and `valExp`. These work much l
 IdField = KeyVal<"\"id\"", number>
 ```
 
-In the v17 interpreter, we handle parameters by maintaining a _rule stack_ (which is much like the call stack in most programming languages).
+In the v17 interpreter, we handle parameters by maintaining a _rule stack_.
 
 In v18, we handle parameterized rules via static specialization. This means that we generate a separate rule body for every unique combination of parameters. So parameterized rules are more like macros: they are expanded at compile time, and no parameters exist at runtime. In the example above, it means that there is no generic `KeyVal` rule — it's as if we defined the rule like this:
 
