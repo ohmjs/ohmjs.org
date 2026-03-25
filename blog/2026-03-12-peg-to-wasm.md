@@ -13,7 +13,6 @@ A few weeks ago, we announced the [Ohm v18 beta](./2026-02-20-ohm-v18.md), which
 
 The new parsing engine works by compiling an Ohm grammar — which is a form of [parsing expression grammars](https://en.wikipedia.org/wiki/Parsing_expression_grammar), or PEG — into a WebAssembly module that implements a parser. In this post, we'll dive into the technical details of how that works, and talk about some of the optimizations that made it even faster.
 
-
 ## PExpr trees
 
 In previous versions of Ohm (up to and including v17), the parsing engine used an approach called _AST interpretation_. We'll briefly explain how that works; it will be useful for understanding how the WebAssembly version is different.
@@ -106,15 +105,15 @@ succeeded? return true
 return false
 ```
 
-Note that in the generated WebAssembly code, we're also not dispatching to any kind of generic `eval` function, we just inline the code for each individual expression. The exception is rule application: by default, each rule gets compiled to its own function, so a rule application (like `Apply('Object')` in the JSONLike grammar) just compiles to a `call`.
+Note that in the generated WebAssembly code, we're also not dispatching to any kind of generic `eval` function — we just inline the code for each individual expression. The exception is rule application: by default, each rule gets compiled to its own function, so a rule application (like `Apply('Object')` in the JSONLike grammar) just compiles to a `call`.
 
 Producing a _recognizer_ (something that just accepts or rejects a given string, without producing a parse tree) in this way was the first major milestone for v18, and it didn't take long. We only targeted pure-PEG features; Ohm-specific things like parameterized rules and left recursion would be harder to deal with.
 
-After adding support for construction of basic parse trees, the first version of the WebAssembly compiler was about 800 lines of JavaScript. After that, it was time to start tackling the Ohm-specific features.
+After adding support for constructing basic parse trees, the first version of the WebAssembly compiler was about 800 lines of JavaScript. After that, it was time to start tackling the Ohm-specific features.
 
 ## Building syntax trees
 
-In order to be able to do something useful with a valid input, we need to produce some kind of _parse tree_ — or _concrete syntax tree_ (CST), as they're called in Ohm. In v17, CST nodes are regular JavaScript objects, allocated on the heap and managed by the garbage collector. But, from a memory management perspective, CST nodes have a few interesting properties:
+So far we've described how v18 compiles a recognizer. But to do something useful with a valid input, we need to produce some kind of _parse tree_ — or _concrete syntax tree_ (CST), as they're called in Ohm. In v17, CST nodes are regular JavaScript objects, allocated on the heap and managed by the garbage collector. But, from a memory management perspective, CST nodes have a few interesting properties:
 
 - The nodes themselves are relatively small, so the per-node memory management overhead is relatively large.
 - There are a large number of nodes (counting Terminal nodes, around one per input character).
@@ -123,13 +122,14 @@ In order to be able to do something useful with a valid input, we need to produc
 
 These properties make CST nodes well-suited for region-based memory management, also known as _arena allocation_. As [Wikipedia describes it](https://en.wikipedia.org/wiki/Region-based_memory_management):
 
-> A region [...] is a collection of allocated objects that can be efficiently reallocated or deallocated all at once. Memory allocators using region-based managements are often called _area allocators_, and when they work by only "bumping" a single pointer, as _bump allocators_.
+> A region [...] is a collection of allocated objects that can be efficiently reallocated or deallocated all at once. Memory allocators using region-based management are often called _area allocators_, and when they work by only "bumping" a single pointer, as _bump allocators_.
 
 ### Bump allocation into Wasm linear memory
 
 In v18 we use a bump allocator (provided by [AssemblyScript's stub runtime](https://www.assemblyscript.org/runtime.html#variants)) to allocate CST nodes in Wasm linear memory. This has lower overhead than heap-allocated JavaScript objects (only one 32-bit header field per object, vs 3–4 in most JS engines). We consider all CST nodes to be owned by the `MatchResult` they are associated with, so when the `MatchResult` is freed, we also reclaim the memory from all its CST nodes.
 
 For references between nodes, we use a 32-bit offset into linear memory, rather than a full-width pointer. (This is the normal way to use references in 32-bit WebAssembly.)
+
 Overall, the approach is similar to what Adrian Sampson describes in [Flattening ASTs (and Other Compiler Data Structures)](https://www.cs.cornell.edu/~asampson/blog/flattening.html).
 
 ### Node layout
@@ -268,7 +268,7 @@ After specialization, two applications of the same rule with different parameter
 
 ## Optimized space skipping
 
-One of Ohm's distinctive features is that syntactic rules (those starting with an uppercase letter) automatically skip whitespace between tokens. And we allow the grammar author to override the definition of whitespace — for example, to allow any comments to be treated as whitespace.
+One of Ohm's distinctive features is that syntactic rules (those starting with an uppercase letter) automatically skip whitespace between tokens, and the grammar author can override the definition of whitespace — for example, to allow comments to be treated as whitespace.
 
 In v17, implicit space skipping is treated just like an explicit application of the `spaces` rule: CST nodes are allocated and the result is memoized.
 
