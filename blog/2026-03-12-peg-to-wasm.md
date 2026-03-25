@@ -107,9 +107,9 @@ return false
 
 Note that in the generated WebAssembly code, we're also not dispatching to any kind of generic `eval` function — we just inline the code for each individual expression. The exception is rule application: by default, each rule gets compiled to its own function, so a rule application (like `Apply('Object')` in the JSONLike grammar) just compiles to a `call`.
 
-Producing a _recognizer_ (something that just accepts or rejects a given string, without producing a parse tree) in this way was the first major milestone for v18, and it didn't take long. We only targeted pure-PEG features; Ohm-specific things like parameterized rules and left recursion would be harder to deal with.
+Producing a _recognizer_ (something that just accepts or rejects a given string, without producing a parse tree) in this way was the first major milestone for v18, and it only took about 8 days. We only targeted pure-PEG features; Ohm-specific things like parameterized rules and left recursion would be harder to deal with.
 
-After adding support for constructing basic parse trees, the first version of the WebAssembly compiler was about 800 lines of JavaScript. After that, it was time to start tackling the Ohm-specific features.
+The next step was to add support for constructing parse trees.
 
 ## Building syntax trees
 
@@ -284,7 +284,7 @@ Optimizing space skipping can lead to a _huge_ performance gain in some grammars
 
 ## Other optimizations
 
-A few other important optimizations worth mentioning:
+The things mentioned above were the biggest wins; a few smaller optimizations also contributed meaningful gains.
 
 ### Single-use rule inlining
 
