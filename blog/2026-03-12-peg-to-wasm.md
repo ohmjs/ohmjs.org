@@ -3,11 +3,16 @@ title: Inside Ohm's PEG-to-Wasm compiler
 authors: pdubroy
 ---
 
+:::note About Ohm
+_Ohm is a user-friendly parsing toolkit for JavaScript and TypeScript. You can use it to parse custom file formats or quickly build parsers, interpreters, and compilers for programming languages. [Learn more](https://ohmjs.org)_
+:::
+
 A few weeks ago, we announced the [Ohm v18 beta](./2026-02-20-ohm-v18.md), which involved a complete rewrite of the core parsing engine. Since then, we've implemented even more performance improvements: v18 is now **more than 50x faster for real-world grammars** while using about 10% of the memory.
 
 <img src="/img/blog/v18-results.svg" alt="v18 benchmark results" style={{width: '100%', margin: '1.5rem 0' }} />
 
 The new parsing engine works by compiling an Ohm grammar — which is a form of [parsing expression grammars](https://en.wikipedia.org/wiki/Parsing_expression_grammar), or PEG — into a WebAssembly module that implements a parser. In this post, we'll dive into the technical details of how that works, and talk about some of the optimizations that made it even faster.
+
 
 ## PExpr trees
 
@@ -103,13 +108,13 @@ return false
 
 Note that in the generated WebAssembly code, we're also not dispatching to any kind of generic `eval` function, we just inline the code for each individual expression. The exception is rule application: by default, each rule gets compiled to its own function, so a rule application (like `Apply('Object')` in the JSONLike grammar) just compiles to a `call`.
 
-Producing a _recognizer_ (something that just accepts or rejects a given string, without producing a parse tree) in this way was the first major milestone for v18, and it didn't take long. I only targeted pure-PEG features, Ohm-specific things like parameterized rules and left recursion would be harder to deal with.
+Producing a _recognizer_ (something that just accepts or rejects a given string, without producing a parse tree) in this way was the first major milestone for v18, and it didn't take long. We only targeted pure-PEG features; Ohm-specific things like parameterized rules and left recursion would be harder to deal with.
 
 After adding support for construction of basic parse trees, the first version of the WebAssembly compiler was about 800 lines of JavaScript. After that, it was time to start tackling the Ohm-specific features.
 
 ## Building syntax trees
 
-In order to be able to do something useful with a valid input, we need to produce some kind of _parse tree_ — or _concrete syntax tree_ (CST), as we usually call them in Ohm. In v17, CST nodes are regular JavaScript objects, allocated on the heap and managed by the garbage collector. But, from a memory management perspective, CST nodes have a few interesting properties:
+In order to be able to do something useful with a valid input, we need to produce some kind of _parse tree_ — or _concrete syntax tree_ (CST), as they're called in Ohm. In v17, CST nodes are regular JavaScript objects, allocated on the heap and managed by the garbage collector. But, from a memory management perspective, CST nodes have a few interesting properties:
 
 - The nodes themselves are relatively small, so the per-node memory management overhead is relatively large.
 - There are a large number of nodes (counting Terminal nodes, around one per input character).
@@ -243,7 +248,7 @@ In Ohm, a rule can have _parameters_ — parsing expressions that are substitute
 KeyVal<keyExp, valExp> = keyExp ":" valExp
 ```
 
-The `KeyVal` rule takes two parameters, `keyExp` and `valExp`. These work much like function parameters in any old programming language: when we use the rule, we also need to supply the actual parameters (aka _arguments_). For example:
+The `KeyVal` rule takes two parameters, `keyExp` and `valExp`. These work much like function parameters in a typical programming language: when we use the rule, we also need to supply the actual parameters (aka _arguments_). For example:
 
 ```
 IdField = KeyVal<"\"id\"", number>
@@ -257,7 +262,7 @@ In v18, we handle parameterized rules via static specialization. This means that
 KeyVal$0 = "\"id\"" ":" number
 ```
 
-Not only does this simplify the runtime semantics, but it also works well with memoization. For parameterized rules, we can only use a memo entry if the parameters are identical: if `KeyVal<"\"id\"", number>` succeeds at position 0, it doesn't mean that `KeyVal<"\"id\"", letter>` will.
+This simplifies the runtime semantics. It also works well with memoization. For parameterized rules, we can only use a memo entry if the parameters are identical: if `KeyVal<"\"id\"", number>` succeeds at position 0, it doesn't mean that `KeyVal<"\"id\"", letter>` will.
 
 After specialization, two applications of the same rule with different parameters can simply be treated as two unique rule applications, and their memo entries will never be shared.
 
@@ -277,7 +282,7 @@ Optimizing space skipping can lead to a _huge_ performance gain in some grammars
 
 ## Other optimizations
 
-A few other important optimizations that are worth mentioning —
+A few other important optimizations worth mentioning:
 
 ### Single-use rule inlining
 
