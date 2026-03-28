@@ -71,7 +71,7 @@ import * as ohm from 'https://unpkg.com/ohm-js@17';
 
 ### Defining Grammars
 
-![Instantiating a grammar](https://ohmjs.org/img/docs/instantiating-grammars.png)
+![Instantiating a grammar](images/instantiating-grammars.png)
 
 To use Ohm, you need a grammar that is written in the Ohm language. The grammar provides a formal
 definition of the language or data format that you want to parse. There are a few different ways
@@ -92,9 +92,11 @@ you can define an Ohm grammar:
 
   In `myGrammar.ohm`:
 
-        MyGrammar {
-          greeting = "Hello" | "Hola"
-        }
+  ```
+  MyGrammar {
+    greeting = "Hello" | "Hola"
+  }
+  ```
 
   In JavaScript:
 
@@ -109,7 +111,7 @@ For more information, see [Instantiating Grammars](api-reference.md#instantiatin
 
 ### Using Grammars
 
-![Matching input](https://ohmjs.org/img/docs/matching.png)
+![Matching input](images/matching.png)
 
 <!-- @markscript
   // The duplication here is required because Markscript only executes top-level code blocks.
@@ -137,11 +139,11 @@ For more information, see the [API Reference](api-reference.md).
 
 Ohm has two tools to help you debug grammars: a text trace, and a graphical visualizer.
 
-[![Ohm Visualizer](https://ohmjs.org/img/docs/visualizer-small.png)](https://ohmjs.org/editor)
+[![Ohm Visualizer](images/visualizer-small.png)](https://ohmjs.org/editor)
 
 You can [try the visualizer online](https://ohmjs.org/editor).
 
-To see the text trace for a grammar `g`, just use the [`g.trace()`](api-reference.md#trace)
+To see the text trace for a grammar `g`, just use the [`g.trace()`](api-reference.md#Grammar.trace)
 method instead of `g.match`. It takes the same arguments, but instead of returning a MatchResult
 object, it returns a Trace object — calling its `toString` method returns a string describing
 all of the decisions the parser made when trying to match the input. For example, here is the
@@ -172,3 +174,7 @@ b                    ✓ Unicode [Ll] character ⇒  "b"
                      ✗ Unicode [Ltmo] character
            ✓ end ⇒  ""
 ```
+
+## Quick reference
+
+![Basic syntax](images/quick-ref-basic-syntax.png)

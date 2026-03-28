@@ -1,8 +1,7 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 async function createConfig() {
@@ -13,8 +12,13 @@ async function createConfig() {
       'A JavaScript library for building parsers, interpreters, compilers, and more.',
     url: 'https://ohmjs.org',
     baseUrl: '/',
-    onBrokenLinks: 'error',
-    onBrokenMarkdownLinks: 'error',
+    onBrokenLinks: 'throw',
+    markdown: {
+      hooks: {
+        onBrokenMarkdownLinks: 'throw',
+        onBrokenMarkdownImages: 'throw',
+      },
+    },
     favicon: 'img/favicon.ico',
 
     // These are used for deployment.
@@ -135,8 +139,11 @@ async function createConfig() {
           copyright: `Copyright © 2014–${new Date().getFullYear()} Alessandro Warth, Patrick Dubroy, and the Ohm project contributors. Built with Docusaurus.`,
         },
         prism: {
-          theme: lightCodeTheme,
-          darkTheme: darkCodeTheme,
+          theme: prismThemes.github,
+          darkTheme: prismThemes.dracula,
+          additionalLanguages: [
+            "bash",
+          ],
         }
       }),
   };

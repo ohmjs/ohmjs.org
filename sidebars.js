@@ -73,6 +73,16 @@ const sidebars = {
           label: 'Contributing',
           id: 'contributor-guide',
         },
+        {
+          type: 'doc',
+          label: 'Philosophy',
+          id: 'philosophy',
+        },
+        {
+          type: 'doc',
+          label: 'Docker',
+          id: 'docker',
+        },
       ],
     },
     {
@@ -85,14 +95,34 @@ const sidebars = {
           id: 'releases/ohm-js-18.0',
         },
         {
-          type: 'doc',
+          type: 'category',
           label: 'v17.0 (Latest)',
-          id: 'releases/ohm-js-17.0',
+          link: {
+            type: 'doc',
+            id: 'releases/ohm-js-17.0',
+          },
+          items: [
+            {
+              type: 'doc',
+              label: 'Indentation-sensitive languages',
+              id: 'indentation-sensitive',
+            },
+            {
+              type: 'doc',
+              label: 'Incremental semantics',
+              id: 'incremental-semantics',
+            },
+          ],
         },
         {
           type: 'doc',
           label: 'v16.0',
           id: 'releases/ohm-js-16.0',
+        },
+        {
+          type: 'doc',
+          label: 'Miniohm',
+          id: 'design/miniohm',
         },
       ],
     },
